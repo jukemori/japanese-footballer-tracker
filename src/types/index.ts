@@ -83,7 +83,14 @@ interface Penalty {
   saved: number | null;
 }
 
-interface PlayerStats {
+export interface PlayerProps {
+  name: string;
+  photo: string;
+  height: number;
+  weight: number;
+}
+
+export interface StatsProps {
   team: Team;
   league: League;
   games: Games;
@@ -99,6 +106,6 @@ interface PlayerStats {
   penalty: Penalty;
 }
 
-export interface PlayerStatsProps {
-  stats: PlayerStats;
+export interface StatsArrayProps {
+  stats: StatsProps;
 }
