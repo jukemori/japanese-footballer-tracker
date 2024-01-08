@@ -3,10 +3,10 @@ import { StatsArrayProps } from '@/types'
 function Stats({ stats }: StatsArrayProps) {
   return (
     <div>
-      <h2>{stats.team.name}</h2>
-      <p>League: {stats.league.name}</p>
-      <p>Country: {stats.league.country}</p>
-      {/* Add other stats rendering here */}
+      <h2>Competition: {stats.league.name}</h2>
+      <p>Games Played: {stats.games.appearences}</p>
+      <p>Goals: {stats.goals.total}</p>
+      <p>Assists: {stats.goals.assists}</p>
     </div>
   )
 }
