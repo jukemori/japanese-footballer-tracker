@@ -11,6 +11,7 @@ interface League {
   logo: string;
   flag: string;
   season: number;
+  round: string;
 }
 
 interface Games {
@@ -109,3 +110,44 @@ export interface StatsProps {
 export interface StatsArrayProps {
   stats: StatsProps;
 }
+
+interface Fixture {
+  id: number;
+  referee: string | null;
+  timezone: string;
+  date: string;
+  timestamp: number;
+  periods: any;
+  venue: any;
+  status: any;
+}
+
+
+interface Teams {
+  home: any;
+  away: any;
+}
+
+interface Goals {
+  home: number;
+  away: number;
+}
+
+interface Score {
+  halftime: any;
+  fulltime: any;
+  extratime: any;
+  penalty: any;
+}
+
+interface FixtureItem {
+  fixture: Fixture;
+  league: League;
+  teams: Teams;
+  goals: Goals;
+  score: Score;
+}
+
+const fixtures: FixtureItem[] = [
+  // ... (your fixtures array here)
+];
