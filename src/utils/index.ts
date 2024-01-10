@@ -30,7 +30,7 @@ export const getPlayer = async () => {
 
   try {
     const result = await makeApiRequest(url, params)
-    console.log('result', result);
+    // console.log('result', result);
     const player = result.response[0].player;
     return player;
   } catch (error) {
@@ -51,8 +51,26 @@ export const getPlayerStats = async () => {
   try {
     const result = await makeApiRequest(url, params);
     const playerStats = result.response[0].statistics;
-    console.log('stats', playerStats);
+    // console.log('stats', playerStats);
     return playerStats;
+  } catch (error) {
+    console.error('Error:', error);
+    return (error as Error).message;
+  }
+};
+
+export const getFixtures = async () => {
+  const url = 'https://api-football-v1.p.rapidapi.com/v3/fixtures';
+  const params = {
+    team: '548',
+    season: '2023'
+  };
+
+  try {
+    const result = await makeApiRequest(url, params);
+    const fixtures = result.response;
+    // console.log('fixtures', fixtures);
+    return fixtures;
   } catch (error) {
     console.error('Error:', error);
     return (error as Error).message;
