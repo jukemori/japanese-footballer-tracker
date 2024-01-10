@@ -140,7 +140,7 @@ interface Score {
   penalty: any;
 }
 
-interface FixtureItem {
+export interface FixtureProps {
   fixture: Fixture;
   league: League;
   teams: Teams;
@@ -148,6 +148,6 @@ interface FixtureItem {
   score: Score;
 }
 
-const fixtures: FixtureItem[] = [
-  // ... (your fixtures array here)
-];
+export interface FixtureArrayProps {
+  fixtures: FixtureProps;
+}
