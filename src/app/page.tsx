@@ -1,18 +1,17 @@
 import { getPlayer, getPlayerStats, getFixtures } from '@/utils'
-import { PlayerProps, StatsProps } from '@/types'
-import { Stats } from '@/components'
+import { PlayerProps, StatsProps, FixtureProps } from '@/types'
+import { Stats, Fixture } from '@/components'
 import Image from 'next/image'
 
 export default async function Home() {
   const player: PlayerProps = await getPlayer()
   const playerStatsArray: StatsProps[] = await getPlayerStats()
-  const fixtures = await getFixtures()
-  fixtures.sort((a, b) => {
+  const fixtureArray: FixtureProps[] = await getFixtures()
+  fixtureArray.sort((a, b) => {
     const dateA = new Date(a.fixture.date)
     const dateB = new Date(b.fixture.date)
     return dateA - dateB
   })
-  console.log('lol', fixtures)
 
   return (
     <div>
@@ -24,6 +23,10 @@ export default async function Home() {
 
       {playerStatsArray.map((stats: StatsProps, index: number) => (
         <Stats key={index} stats={stats} />
+      ))}
+
+      {fixtureArray.map((fixture: FixtureProps, index: number) => (
+        <Fixture key={index} fixture={fixture} />
       ))}
     </div>
   )
