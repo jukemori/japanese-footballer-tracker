@@ -149,5 +149,5 @@ export interface FixtureProps {
 }
 
 export interface FixtureArrayProps {
-  fixtures: FixtureProps;
+  fixture: FixtureProps;
 }
