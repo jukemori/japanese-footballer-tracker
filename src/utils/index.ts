@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { FixtureProps } from '@/types';
 
 const makeApiRequest = async (urlProps: string, paramsProps: object) => {
   const options = {
@@ -69,8 +70,33 @@ export const getFixtures = async () => {
   try {
     const result = await makeApiRequest(url, params);
     const fixtures = result.response;
-    // console.log('fixtures', fixtures);
     return fixtures;
+  } catch (error) {
+    console.error('Error:', error);
+    return (error as Error).message;
+  }
+};
+
+
+export const getFixturePlayers = async (fixture: FixtureProps) => {
+  const url = 'https://api-football-v1.p.rapidapi.com/v3/fixtures/players';
+  const teamId = '548';
+
+  try {
+    const allPlayersArray = [];
+    const fixtureId = fixture.fixture.id;
+    const params = {
+      fixture: fixtureId,
+      team: teamId,
+    };
+
+    const result = await makeApiRequest(url, params);
+
+    for (const player of result.response[0].players) {
+      allPlayersArray.push(player.player.id);
+    }
+
+    return allPlayersArray;
   } catch (error) {
     console.error('Error:', error);
     return (error as Error).message;
