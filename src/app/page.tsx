@@ -3,6 +3,7 @@ import {
   getPlayerStats,
   getFixtures,
   getFixturePlayers,
+  getFixturePlayerStats
 } from '@/utils'
 import { PlayerProps, StatsProps, FixtureProps } from '@/types'
 import { Stats, Fixture } from '@/components'
@@ -18,15 +19,18 @@ async function fetchPlayerData(): Promise<HomeProps> {
   const player = await getPlayer()
   const playerStatsArray = await getPlayerStats()
   const fixtureArray = await getFixtures()
+  const playerFixtureStatsArray = await getFixturePlayerStats()
+
+  console.log('player fixture', playerFixtureStatsArray)
 
   const currentDate = new Date()
-  const twoWeeksAgo = new Date()
-  twoWeeksAgo.setDate(currentDate.getDate() - 14)
+  const monthAgo = new Date()
+  monthAgo.setDate(currentDate.getDate() - 30)
 
   const filteredFixtures = fixtureArray
     .filter((fixture: FixtureProps) => {
       const fixtureDate = new Date(fixture.fixture.date)
-      return fixtureDate >= twoWeeksAgo && fixtureDate <= currentDate
+      return fixtureDate >= monthAgo && fixtureDate <= currentDate
     })
     .sort((a: FixtureProps, b: FixtureProps) => {
       const dateA = new Date(a.fixture.date)
@@ -54,17 +58,13 @@ async function fetchPlayerData(): Promise<HomeProps> {
 
   const fixturePlayersArray = await Promise.all(fixturePlayersPromises)
 
-  console.log(fixturePlayersArray)
-
   const fixturesWithPlayer = filteredFixtures.filter(
     (fixture: FixtureProps, index: number) => {
       const hasPlayer = fixturePlayersArray[index].includes(32862)
       return hasPlayer
     }
   )
-
-  console.log(fixturesWithPlayer)
-
+  
   return {
     player,
     playerStatsArray,
