@@ -102,3 +102,35 @@ export const getFixturePlayers = async (fixture: FixtureProps) => {
     return (error as Error).message;
   }
 };
+
+export const getFixturePlayerStats = async () => {
+  const url = 'https://api-football-v1.p.rapidapi.com/v3/fixtures/players';
+  const teamId = '548';
+  const playerId ='32862'
+
+  try {
+    const playerStatsArray = [];
+    const fixtureId = '1038141';
+    const params = {
+      fixture: fixtureId,
+      team: teamId,
+    };
+
+    const result = await makeApiRequest(url, params);
+
+    for (const player of result.response[0].players) {
+      // console.log( 'player', player)
+      if( player.player.id === playerId) {
+
+        console.log('statistics', player.statistics[0])
+        playerStatsArray.push(player.statistics[0])
+        break;
+      }
+    }
+
+    return playerStatsArray;
+  } catch (error) {
+    console.error('Error:', error);
+    return (error as Error).message;
+  }
+};
