@@ -1,6 +1,6 @@
 import { StatsArrayProps } from '@/types'
 
-function Stats({ stats }: StatsArrayProps) {
+function CompetitionStats({ stats }: StatsArrayProps) {
   return (
     <div>
       <h2>Competition: {stats.league.name}</h2>
@@ -11,4 +11,4 @@ function Stats({ stats }: StatsArrayProps) {
   )
 }
 
-export default Stats
+export default CompetitionStats

@@ -3,15 +3,15 @@ import {
   getPlayerStats,
   getFixtures,
   getFixturePlayers,
-  getFixturePlayerStats
+  getFixturePlayerStats,
 } from '@/utils'
-import { PlayerProps, StatsProps, FixtureProps } from '@/types'
-import { Stats, Fixture } from '@/components'
+import { PlayerProps, CompetitionStatsProps, FixtureProps } from '@/types'
+import { CompetitionStats, Fixture } from '@/components'
 import Image from 'next/image'
 
 interface HomeProps {
   player: PlayerProps
-  playerStatsArray: StatsProps[]
+  playerStatsArray: CompetitionStatsProps[]
   fixtureArray: FixtureProps[]
 }
 
@@ -64,7 +64,7 @@ async function fetchPlayerData(): Promise<HomeProps> {
       return hasPlayer
     }
   )
-  
+
   return {
     player,
     playerStatsArray,
@@ -82,7 +82,7 @@ function Home({ player, playerStatsArray, fixtureArray }: HomeProps) {
       <p>{player.weight}</p>
 
       {playerStatsArray.map((stats, index) => (
-        <Stats key={index} stats={stats} />
+        <CompetitionStats key={index} stats={stats} />
       ))}
 
       {fixtureArray.map((fixture, index) => (

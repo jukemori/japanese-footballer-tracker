@@ -91,7 +91,7 @@ export interface PlayerProps {
   weight: number;
 }
 
-export interface StatsProps {
+export interface CompetitionStatsProps {
   team: Team;
   league: League;
   games: Games;
@@ -108,7 +108,7 @@ export interface StatsProps {
 }
 
 export interface StatsArrayProps {
-  stats: StatsProps;
+  stats: CompetitionStatsProps;
 }
 
 interface Fixture {
@@ -160,7 +160,7 @@ interface PlayerGame {
   captain: boolean;
   substitute: boolean;
 }
-export interface PlayerStats {
+export interface PlayerStatsProps {
   games: PlayerGame;
   offsides: number | null;
   shots: Shots;

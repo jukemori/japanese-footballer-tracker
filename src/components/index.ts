@@ -1,4 +1,4 @@
-import Stats from "./Stats";
+import CompetitionStats from "./CompetitionStats";
 import Fixture from "./Fixture";
 
-export { Stats, Fixture };
+export { CompetitionStats, Fixture };
