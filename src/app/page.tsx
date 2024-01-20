@@ -5,23 +5,25 @@ import {
   getFixturePlayers,
   getFixturePlayerStats,
 } from '@/utils'
-import { PlayerProps, CompetitionStatsProps, FixtureProps } from '@/types'
-import { CompetitionStats, Fixture } from '@/components'
+import { PlayerProps, CompetitionStatsProps, FixtureProps, PlayerStatsProps } from '@/types'
+import { CompetitionStats, Fixture, PlayerFixtureStats } from '@/components'
 import Image from 'next/image'
 
 interface HomeProps {
   player: PlayerProps
   playerStatsArray: CompetitionStatsProps[]
   fixtureArray: FixtureProps[]
+  playerFixtureStats: PlayerStatsProps
 }
 
 async function fetchPlayerData(): Promise<HomeProps> {
   const player = await getPlayer()
   const playerStatsArray = await getPlayerStats()
   const fixtureArray = await getFixtures()
-  const playerFixtureStatsArray = await getFixturePlayerStats()
+  const playerFixtureStatsArray = await getFixturePlayerStats();
+const playerFixtureStats = playerFixtureStatsArray[0];
 
-  console.log('player fixture', playerFixtureStatsArray)
+  console.log('player fixture', playerFixtureStats)
 
   const currentDate = new Date()
   const monthAgo = new Date()
@@ -69,10 +71,11 @@ async function fetchPlayerData(): Promise<HomeProps> {
     player,
     playerStatsArray,
     fixtureArray: fixturesWithPlayer,
+    playerFixtureStats
   }
 }
 
-function Home({ player, playerStatsArray, fixtureArray }: HomeProps) {
+function Home({ player, playerStatsArray, fixtureArray, playerFixtureStats }: HomeProps) {
   return (
     <div>
       <h1>Player Information:</h1>
@@ -88,18 +91,23 @@ function Home({ player, playerStatsArray, fixtureArray }: HomeProps) {
       {fixtureArray.map((fixture, index) => (
         <Fixture key={index} fixture={fixture} />
       ))}
+      
+      <PlayerFixtureStats  playerStats={playerFixtureStats} />
+      
+
     </div>
   )
 }
 
 export default async function HomePage() {
-  const { player, playerStatsArray, fixtureArray } = await fetchPlayerData()
+  const { player, playerStatsArray, fixtureArray, playerFixtureStats } = await fetchPlayerData()
 
   return (
     <Home
       player={player}
       playerStatsArray={playerStatsArray}
       fixtureArray={fixtureArray}
+      playerFixtureStats={playerFixtureStats}
     />
   )
 }
