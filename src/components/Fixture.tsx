@@ -1,4 +1,8 @@
-import { FixtureArrayProps } from '@/types'
+import { FixtureProps } from '@/types'
+
+interface FixtureArrayProps {
+  fixture: FixtureProps;
+}
 
 function Fixture({ fixture }: FixtureArrayProps) {
   const fixtureTime = new Date(fixture.fixture.date)

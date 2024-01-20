@@ -148,9 +148,7 @@ export interface FixtureProps {
   score: Score;
 }
 
-export interface FixtureArrayProps {
-  fixture: FixtureProps;
-}
+
 
 interface PlayerGame {
   minutes: number | null;
