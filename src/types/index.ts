@@ -151,3 +151,25 @@ export interface FixtureProps {
 export interface FixtureArrayProps {
   fixture: FixtureProps;
 }
+
+interface PlayerGame {
+  minutes: number | null;
+  number: number | null;
+  position: string;
+  rating: string;
+  captain: boolean;
+  substitute: boolean;
+}
+export interface PlayerStats {
+  games: PlayerGame;
+  offsides: number | null;
+  shots: Shots;
+  goals: Goals;
+  passes: Passes;
+  tackles: Tackles;
+  duels: Duels;
+  dribbles: Dribbles;
+  fouls: Fouls;
+  cards: Cards;
+  penalty: Penalty;
+};
