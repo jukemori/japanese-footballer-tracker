@@ -106,7 +106,7 @@ export const getFixturePlayers = async (fixture: FixtureProps) => {
 export const getFixturePlayerStats = async () => {
   const url = 'https://api-football-v1.p.rapidapi.com/v3/fixtures/players';
   const teamId = '548';
-  const playerId ='32862'
+  const playerId = 32862
 
   try {
     const playerStatsArray = [];
@@ -119,10 +119,12 @@ export const getFixturePlayerStats = async () => {
     const result = await makeApiRequest(url, params);
 
     for (const player of result.response[0].players) {
-      // console.log( 'player', player)
+      // console.log('playerID', player.player.id)
+      // console.log( 'isPlayer?', player.player.id === playerId)
+      // console.log('kubo', playerId)
       if( player.player.id === playerId) {
 
-        console.log('statistics', player.statistics[0])
+        // console.log('statistics', player.statistics[0])
         playerStatsArray.push(player.statistics[0])
         break;
       }
