@@ -22,16 +22,16 @@ const makeApiRequest = async (urlProps: string, paramsProps: object) => {
   }
 };
 
-export const getPlayer = async () => {
+
+export const getPlayer = async (id: string, season: string) => {
   const url = 'https://api-football-v1.p.rapidapi.com/v3/players';
   const params = {
-    id: '32862',
-    season: '2023'
+    id: id,
+    season: season
   };
 
   try {
-    const result = await makeApiRequest(url, params)
-    // console.log('result', result);
+    const result = await makeApiRequest(url, params);
     const player = result.response[0].player;
     return player;
   } catch (error) {
@@ -41,18 +41,17 @@ export const getPlayer = async () => {
 };
 
 
-export const getPlayerStats = async () => {
+export const getPlayerStats = async (id: string, team: string, season: string) => {
   const url = 'https://api-football-v1.p.rapidapi.com/v3/players';
   const params = {
-    id: '32862',
-    team: '548',
-    season: '2023'
+    id: id,
+    team: team,
+    season: season
   };
 
   try {
     const result = await makeApiRequest(url, params);
     const playerStats = result.response[0].statistics;
-    // console.log('stats', playerStats);
     return playerStats;
   } catch (error) {
     console.error('Error:', error);
@@ -60,11 +59,11 @@ export const getPlayerStats = async () => {
   }
 };
 
-export const getFixtures = async () => {
+export const getFixtures = async (team: string, season: string) => {
   const url = 'https://api-football-v1.p.rapidapi.com/v3/fixtures';
   const params = {
-    team: '548',
-    season: '2023'
+    team: team,
+    season: season
   };
 
   try {
@@ -78,16 +77,15 @@ export const getFixtures = async () => {
 };
 
 
-export const getFixturePlayers = async (fixture: FixtureProps) => {
+export const getFixturePlayers = async (fixture: FixtureProps, team: string) => {
   const url = 'https://api-football-v1.p.rapidapi.com/v3/fixtures/players';
-  const teamId = '548';
 
   try {
     const allPlayersArray = [];
     const fixtureId = fixture.fixture.id;
     const params = {
       fixture: fixtureId,
-      team: teamId,
+      team: team,
     };
 
     const result = await makeApiRequest(url, params);
@@ -119,12 +117,7 @@ export const getFixturePlayerStats = async () => {
     const result = await makeApiRequest(url, params);
 
     for (const player of result.response[0].players) {
-      // console.log('playerID', player.player.id)
-      // console.log( 'isPlayer?', player.player.id === playerId)
-      // console.log('kubo', playerId)
       if( player.player.id === playerId) {
-
-        // console.log('statistics', player.statistics[0])
         playerStatsArray.push(player.statistics[0])
         break;
       }

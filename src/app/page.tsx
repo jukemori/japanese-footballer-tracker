@@ -17,11 +17,14 @@ interface HomeProps {
 }
 
 async function fetchPlayerData(): Promise<HomeProps> {
-  const player = await getPlayer()
-  const playerStatsArray = await getPlayerStats()
-  const fixtureArray = await getFixtures()
+  const playerId = '32862'
+  const season = '2023'
+  const teamId = '548'
+  const player = await getPlayer(playerId, season)
+  const playerStatsArray = await getPlayerStats(playerId, teamId, season)
+  const fixtureArray = await getFixtures(teamId, season)
   const playerFixtureStatsArray = await getFixturePlayerStats();
-const playerFixtureStats = playerFixtureStatsArray[0];
+  const playerFixtureStats = playerFixtureStatsArray[0];
 
   console.log('player fixture', playerFixtureStats)
 
@@ -53,7 +56,7 @@ const playerFixtureStats = playerFixtureStatsArray[0];
 
   const fixturePlayersPromises = filteredFixtures.map(
     async (fixture: FixtureProps) => {
-      const fixturePlayersArray = await getFixturePlayers(fixture)
+      const fixturePlayersArray = await getFixturePlayers(fixture, teamId)
       return fixturePlayersArray
     }
   )
@@ -92,7 +95,7 @@ function Home({ player, playerStatsArray, fixtureArray, playerFixtureStats }: Ho
         <Fixture key={index} fixture={fixture} />
       ))}
       
-      <PlayerFixtureStats  playerStats={playerFixtureStats} />
+      <PlayerFixtureStats playerStats={playerFixtureStats} />
       
 
     </div>
