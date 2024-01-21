@@ -11,13 +11,26 @@ const PlayerFixtureStats = ({playerStats}: PlayerStatsArrayProps) => {
       <div>
         <strong>Games:</strong>
         <p>Minutes: {playerStats.games.minutes}</p>
-        <p>Number: {playerStats.games.number}</p>
-        <p>Position: {playerStats.games.position}</p>
+        <p>Rating: {playerStats.games.rating}</p>
       </div>
       <div>
         <strong>Shots:</strong>
         <p>Total: {playerStats.shots.total}</p>
-        <p>On: {playerStats.shots.on}</p>
+      </div>
+      <div>
+        <strong>Passes:</strong>
+        <p>Total: {playerStats.passes.total}</p>
+        <p>Key passes: {playerStats.passes.key}</p>
+      </div>
+      <div>
+        <strong>Dribbles:</strong>
+        <p>Attempts: {playerStats.dribbles.attempts}</p>
+        <p>Success: {playerStats.dribbles.success}</p>
+      </div>
+      <div>
+        <strong>Fouls:</strong>
+        <p>Drawn: {playerStats.fouls.drawn}</p>
+        <p>Comitted: {playerStats.fouls.committed}</p>
       </div>
     </div>
   );
