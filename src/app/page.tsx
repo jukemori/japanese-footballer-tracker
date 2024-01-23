@@ -5,7 +5,12 @@ import {
   getFixturePlayers,
   getFixturePlayerStats,
 } from '@/utils'
-import { PlayerProps, CompetitionStatsProps, FixtureProps, PlayerStatsProps } from '@/types'
+import {
+  PlayerProps,
+  CompetitionStatsProps,
+  FixtureProps,
+  PlayerStatsProps,
+} from '@/types'
 import { CompetitionStats, Fixture, PlayerFixtureStats } from '@/components'
 import Image from 'next/image'
 
@@ -20,11 +25,16 @@ async function fetchPlayerData(): Promise<HomeProps> {
   const playerId = '32862'
   const season = '2023'
   const teamId = '548'
+  const fixtrueId = '1038141'
   const player = await getPlayer(playerId, season)
   const playerStatsArray = await getPlayerStats(playerId, teamId, season)
   const fixtureArray = await getFixtures(teamId, season)
-  const playerFixtureStatsArray = await getFixturePlayerStats();
-  const playerFixtureStats = playerFixtureStatsArray[0];
+  const playerFixtureStatsArray = await getFixturePlayerStats(
+    teamId,
+    playerId,
+    fixtrueId
+  )
+  const playerFixtureStats = playerFixtureStatsArray[0]
 
   console.log('player fixture', playerFixtureStats)
 
@@ -74,11 +84,16 @@ async function fetchPlayerData(): Promise<HomeProps> {
     player,
     playerStatsArray,
     fixtureArray: fixturesWithPlayer,
-    playerFixtureStats
+    playerFixtureStats,
   }
 }
 
-function Home({ player, playerStatsArray, fixtureArray, playerFixtureStats }: HomeProps) {
+function Home({
+  player,
+  playerStatsArray,
+  fixtureArray,
+  playerFixtureStats,
+}: HomeProps) {
   return (
     <div>
       <h1>Player Information:</h1>
@@ -94,16 +109,15 @@ function Home({ player, playerStatsArray, fixtureArray, playerFixtureStats }: Ho
       {fixtureArray.map((fixture, index) => (
         <Fixture key={index} fixture={fixture} />
       ))}
-      
-      <PlayerFixtureStats playerStats={playerFixtureStats} />
-      
 
+      <PlayerFixtureStats playerStats={playerFixtureStats} />
     </div>
   )
 }
 
 export default async function HomePage() {
-  const { player, playerStatsArray, fixtureArray, playerFixtureStats } = await fetchPlayerData()
+  const { player, playerStatsArray, fixtureArray, playerFixtureStats } =
+    await fetchPlayerData()
 
   return (
     <Home
