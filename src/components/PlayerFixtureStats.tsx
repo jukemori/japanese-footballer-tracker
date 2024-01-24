@@ -1,10 +1,9 @@
-import { PlayerStatsProps } from "@/types";
+import { PlayerStatsProps } from '@/types'
 
 interface PlayerStatsArrayProps {
   playerStats: PlayerStatsProps
 }
-const PlayerFixtureStats = ({playerStats}: PlayerStatsArrayProps) => {
-  console.log('ps', playerStats)
+const PlayerFixtureStats = ({ playerStats }: PlayerStatsArrayProps) => {
   return (
     <div>
       <h2>Player Fixture Stats</h2>
@@ -33,7 +32,7 @@ const PlayerFixtureStats = ({playerStats}: PlayerStatsArrayProps) => {
         <p>Comitted: {playerStats.fouls.committed}</p>
       </div>
     </div>
-  );
+  )
 }
 
 export default PlayerFixtureStats

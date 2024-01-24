@@ -18,7 +18,7 @@ interface HomeProps {
   player: PlayerProps
   playerStatsArray: CompetitionStatsProps[]
   fixtureArray: FixtureProps[]
-  playerFixtureStats: PlayerStatsProps
+  playerFixtureStatsArray: PlayerStatsProps[]
 }
 
 async function fetchPlayerData(): Promise<HomeProps> {
@@ -29,23 +29,15 @@ async function fetchPlayerData(): Promise<HomeProps> {
   const player = await getPlayer(playerId, season)
   const playerStatsArray = await getPlayerStats(playerId, teamId, season)
   const fixtureArray = await getFixtures(teamId, season)
-  const playerFixtureStatsArray = await getFixturePlayerStats(
-    teamId,
-    playerId,
-    fixtrueId
-  )
-  const playerFixtureStats = playerFixtureStatsArray[0]
-
-  console.log('player fixture', playerFixtureStats)
 
   const currentDate = new Date()
-  const monthAgo = new Date()
-  monthAgo.setDate(currentDate.getDate() - 30)
+  const twoMonthAgo = new Date()
+  twoMonthAgo.setDate(currentDate.getDate() - 60)
 
   const filteredFixtures = fixtureArray
     .filter((fixture: FixtureProps) => {
       const fixtureDate = new Date(fixture.fixture.date)
-      return fixtureDate >= monthAgo && fixtureDate <= currentDate
+      return fixtureDate >= twoMonthAgo && fixtureDate <= currentDate
     })
     .sort((a: FixtureProps, b: FixtureProps) => {
       const dateA = new Date(a.fixture.date)
@@ -80,11 +72,27 @@ async function fetchPlayerData(): Promise<HomeProps> {
     }
   )
 
+  const playerFixtureStatsArray = []
+
+  const playerFixtureIds = fixturesWithPlayer.map(
+    (fixture: FixtureProps) => fixture.fixture.id
+  )
+
+  for (const playerFixtureId of playerFixtureIds) {
+    const playerFixtureStats = await getFixturePlayerStats(
+      teamId,
+      playerId,
+      playerFixtureId
+    )
+
+    playerFixtureStatsArray.push(playerFixtureStats[0])
+  }
+
   return {
     player,
     playerStatsArray,
     fixtureArray: fixturesWithPlayer,
-    playerFixtureStats,
+    playerFixtureStatsArray,
   }
 }
 
@@ -92,7 +100,7 @@ function Home({
   player,
   playerStatsArray,
   fixtureArray,
-  playerFixtureStats,
+  playerFixtureStatsArray,
 }: HomeProps) {
   return (
     <div>
@@ -109,14 +117,15 @@ function Home({
       {fixtureArray.map((fixture, index) => (
         <Fixture key={index} fixture={fixture} />
       ))}
-
-      <PlayerFixtureStats playerStats={playerFixtureStats} />
+      {playerFixtureStatsArray.map((playerFixtureStats, index) => (
+        <PlayerFixtureStats key={index} playerStats={playerFixtureStats} />
+      ))}
     </div>
   )
 }
 
 export default async function HomePage() {
-  const { player, playerStatsArray, fixtureArray, playerFixtureStats } =
+  const { player, playerStatsArray, fixtureArray, playerFixtureStatsArray } =
     await fetchPlayerData()
 
   return (
@@ -124,7 +133,7 @@ export default async function HomePage() {
       player={player}
       playerStatsArray={playerStatsArray}
       fixtureArray={fixtureArray}
-      playerFixtureStats={playerFixtureStats}
+      playerFixtureStatsArray={playerFixtureStatsArray}
     />
   )
 }
